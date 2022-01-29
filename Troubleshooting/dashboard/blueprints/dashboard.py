@@ -1,10 +1,10 @@
 import quart
 
-from dashboard.app import App
+import models
 
 class Dashboard(quart.Blueprint):
-    def __init__(self, app: App) -> None:
-        super().__init__('dashboard', __name__, template_folder = '../templates/dashboard') 
+    def __init__(self, app: models.App) -> None:
+        super().__init__('dashboard', __name__, template_folder = '../templates/dashboard')
         self.app = app
 
         @self.route('/dashboard/<guild_id>', ['GET', 'POST'])
@@ -15,5 +15,5 @@ class Dashboard(quart.Blueprint):
             guild = await app.rest.fetch_guild(guild_id)
             return await quart.render_template('dashboard.html', guild = guild)
 
-def register(app: App) -> None:
+def register(app: models.App) -> None:
     app.register_blueprint(Dashboard(app))

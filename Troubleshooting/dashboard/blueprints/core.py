@@ -1,9 +1,9 @@
 import quart
 
-from dashboard.app import App
+import models
 
 class Core(quart.Blueprint):
-    def __init__(self, app: App) -> None:
+    def __init__(self, app: models.App) -> None:
         super().__init__('core', __name__, template_folder = '../templates/core')
         self.app = app
 
@@ -25,5 +25,5 @@ class Core(quart.Blueprint):
             guilds, invite = await app.rest.fetch_my_guilds(quart.session['access_token'])
             return await quart.render_template('guilds.html', guilds = guilds, invite = invite)
 
-def register(app: App) -> None:
+def register(app: models.App) -> None:
     app.register_blueprint(Core(app))

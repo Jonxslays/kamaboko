@@ -7,8 +7,7 @@ import typing as t
 import quart
 
 from config import Config
-from database import Database
-from .utils import *
+import models
 
 class _BlueprintT(t.Protocol):
     def register(self, app: App) -> None:
@@ -20,8 +19,8 @@ class App(quart.Quart):
 
         self.secret_key = Config.env('SECRET_KEY')
 
-        self.pool = Database()
-        self.rest = OAuth2(self)
+        self.pool = models.Database()
+        self.rest = models.OAuth2(self)
 
         self.load_blueprints(*pathlib.Path('dashboard/blueprints').glob('*.py'))
 
