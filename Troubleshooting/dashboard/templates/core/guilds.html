@@ -1,0 +1,9 @@
+<h1>Guilds</h1>
+{% for guild in guilds %}
+<h1>{{ guild.name }}</h1>
+{% if guild in invite %}
+<a href='https://discord.com/api/oauth2/authorize?client_id=895053517243433060&permissions=8&scope=bot'><button>Invite</button></a>
+{% else %}
+<a href='/dashboard/{{ guild.id }}'><button>Dashboard</button></a>
+{% endif %}
+{% endfor %}
